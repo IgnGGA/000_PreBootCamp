@@ -14,12 +14,12 @@
 # Calcula el precio promedio de venta para cada producto utilizando la información de este diccionario.👌
 # Ventas por Día:
 # Crea un diccionario llamado ingresos_por_dia donde las claves sean las fechas y los valores sean los ingresos totales generados en cada día.
-# Utiliza un bucle para calcular los ingresos totales por día y almacenar estos valores en el diccionario.
+# Utiliza un bucle para calcular los ingresos totales por día y almacenar estos valores en el diccionario.👌
 # Representación de Datos:
 # Crea un diccionario llamado resumen_ventas donde las claves sean los nombres de los productos y los valores sean diccionarios anidados. Cada diccionario anidado debe contener:
-# «cantidad_total»: la cantidad total vendida del producto.
-# «ingresos_totales»: los ingresos totales generados por la venta del producto.
-# «precio_promedio»: el precio promedio de venta del producto.
+# «cantidad_total»: la cantidad total vendida del producto.👌
+# «ingresos_totales»: los ingresos totales generados por la venta del producto.👌
+# «precio_promedio»: el precio promedio de venta del producto.👌
  
 
 # Entrega: Presenta tus resultados en un archivo de texto o una hoja de cálculo. Detalla cada paso del análisis y los resultados obtenidos. Asegúrate de incluir:
@@ -35,8 +35,8 @@ import re
 
 ventas_por_producto = {} #👌
 precios_por_producto = {} #👌
-ingresos_por_dia = {}
-resumen_ventas = {}
+ingresos_por_dia = {} #👌
+resumen_ventas = {} #👌
 
 ventasAbril = [
     {"fecha": "2026-04-15", "producto": "Camiseta", "cantidad": 10, "precio": 19.999},
@@ -83,7 +83,35 @@ def precioPromedio(ventasMes):
     promedio_precios = {producto: precios_por_producto[producto][0] / precios_por_producto[producto][1] for producto in precios_por_producto}
     return print(f"Precio Promedio por Producto: {promedio_precios}\n")
 
+def ingresosPorDia(ventasMes):
+    for venta in ventasMes:
+        fecha = venta["fecha"]
+        ingresos = venta["cantidad"] * venta["precio"]
+        if fecha in ingresos_por_dia:
+            ingresos_por_dia[fecha] += ingresos
+        else:
+            ingresos_por_dia[fecha] = ingresos
+    return print(f"Ingresos por Día: {ingresos_por_dia}\n")
+
+def resumenVentas(ventasMes):
+    for venta in ventasMes:
+        producto = venta["producto"]
+        cantidad = venta["cantidad"]
+        ingresos = venta["cantidad"] * venta["precio"]
+        if producto in resumen_ventas:
+            resumen_ventas[producto]["cantidad_total"] += cantidad
+            resumen_ventas[producto]["ingresos_totales"] += ingresos
+        else:
+            resumen_ventas[producto] = {"cantidad_total": cantidad, "ingresos_totales": ingresos}
+    for producto in resumen_ventas:
+        resumen_ventas[producto]["precio_promedio"] = resumen_ventas[producto]["ingresos_totales"] / resumen_ventas[producto]["cantidad_total"]
+    return print(f"Resumen de Ventas por Producto: {resumen_ventas}\n")
+
 ingresosTotales(ventasAbril)
 ventasporPorducto(ventasAbril)
 mayorCantidadVendida(ventas_por_producto) #Si lo vuelvo a ejecutar, sin haber limpiado la consola me sumara todo otra vez 😂
 precioPromedio(ventasAbril)
+ingresosPorDia(ventasAbril)
+resumenVentas(ventasAbril)
+
+#tarea pendiente, formatear los prints para que sea visualemtente entendible la informacion. 😁
