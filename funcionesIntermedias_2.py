@@ -8,10 +8,10 @@
 # Utiliza un bucle para iterar sobre la lista ventas y calcular los ingresos totales generados por todas las ventas. Los ingresos totales se calculan multiplicando la cantidad vendida por el precio unitario para cada venta y sumando los resultados.👌
 # Análisis del Producto Más Vendido:
 # Crea un diccionario llamado ventas_por_producto donde las claves sean los nombres de los productos y los valores sean la cantidad total vendida de cada producto.👌
-# Utiliza este diccionario para identificar el producto que tuvo la mayor cantidad total vendida.
+# Utiliza este diccionario para identificar el producto que tuvo la mayor cantidad total vendida.👌
 # Promedio de Precio por Producto:
 # Crea un diccionario llamado precios_por_producto donde las claves sean los nombres de los productos y los valores sean tuplas. Cada tupla debe contener dos elementos: la suma de los precios de venta de todas las unidades vendidas y la cantidad total de unidades vendidas.
-# Calcula el precio promedio de venta para cada producto utilizando la información de este diccionario.
+# Calcula el precio promedio de venta para cada producto utilizando la información de este diccionario.👌
 # Ventas por Día:
 # Crea un diccionario llamado ingresos_por_dia donde las claves sean las fechas y los valores sean los ingresos totales generados en cada día.
 # Utiliza un bucle para calcular los ingresos totales por día y almacenar estos valores en el diccionario.
@@ -33,7 +33,10 @@
 
 import re
 
-ventas_por_producto = {}
+ventas_por_producto = {} #👌
+precios_por_producto = {} #👌
+ingresos_por_dia = {}
+resumen_ventas = {}
 
 ventasAbril = [
     {"fecha": "2026-04-15", "producto": "Camiseta", "cantidad": 10, "precio": 19.999},
@@ -53,8 +56,6 @@ def ingresosTotales(ventasMes):
         total += venta["cantidad"] * venta["precio"]
     return print(f"Ingresos Totales: {total}")
 
-ingresosTotales(ventasAbril)
-
 def ventasporPorducto(ventasMes):
     for venta in ventasMes:
         producto = venta["producto"]
@@ -63,12 +64,26 @@ def ventasporPorducto(ventasMes):
             ventas_por_producto[producto] += cantidad
         else:
             ventas_por_producto[producto] = cantidad
-    return print(f"Ventas por Producto: {ventas_por_producto}")
+    return print(f"Ventas por Producto: {ventas_por_producto}\n")
 
 def mayorCantidadVendida(ventas_por_producto):
     producto = max(ventas_por_producto, key=ventas_por_producto.get)
     cantidad = ventas_por_producto[producto]
-    return print(f"Producto más vendido: {producto}, Cantidad total vendida: {cantidad}")
+    return print(f"Producto más vendido: {producto},\nCantidad total vendida: {cantidad}")
 
+def precioPromedio(ventasMes):
+    for venta in ventasMes:
+        producto = venta["producto"]
+        precio = venta["precio"]
+        cantidad = venta["cantidad"]
+        if producto in precios_por_producto:
+            precios_por_producto[producto] = (precios_por_producto[producto][0] + precio * cantidad, precios_por_producto[producto][1] + cantidad)
+        else:
+            precios_por_producto[producto] = (precio * cantidad, cantidad)
+    promedio_precios = {producto: precios_por_producto[producto][0] / precios_por_producto[producto][1] for producto in precios_por_producto}
+    return print(f"Precio Promedio por Producto: {promedio_precios}\n")
+
+ingresosTotales(ventasAbril)
 ventasporPorducto(ventasAbril)
-mayorCantidadVendida(ventas_por_producto)
+mayorCantidadVendida(ventas_por_producto) #Si lo vuelvo a ejecutar, sin haber limpiado la consola me sumara todo otra vez 😂
+precioPromedio(ventasAbril)
